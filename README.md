@@ -31,22 +31,32 @@ As placas em `public/images/muse/` foram geradas com **Muse Spark 1.3 Contributo
 
 O formulário é provisório por decisão de projeto: valida os campos, monta a mensagem e permite copiar. Não envia dados a nenhum serviço. O backend e o canal definitivo dependem de decisão do humano.
 
-## Deploy na Vercel
+## Deploy na Cloudflare Pages
 
-Duas opções:
+O site é estático, sem adapter/SSR. Este repositório já é a raiz do site; no Cloudflare Pages, deixe o **Root Directory** vazio (`/`).
 
-1. **Recomendado:** conectar o repositório com **Root Directory = `axis-lp`**. A Vercel usa `axis-lp/vercel.json` e o build padrão `npm run build`.
-2. **Sem Root Directory:** usar o `vercel.json` da raiz, que instala e constrói `axis-lp/` e publica `axis-lp/dist`.
+No dashboard da Cloudflare Pages:
 
-O `vercel.json` já define:
+- **Framework preset:** Astro
+- **Build command:** `npm ci && npm run build`
+- **Build output directory:** `dist`
+- **Node:** `22.22.0` (definido em `.nvmrc`; também pode usar a env `NODE_VERSION=22.22.0`)
 
-- `cleanUrls: true`
-- `trailingSlash: false`
-- cache longo para `/_astro/*`
-- cache de uma semana para imagens e Open Graph
+O `wrangler.jsonc` aponta o build para `./dist` e serve para deploy direto/CLI:
+
+```bash
+npx wrangler pages deploy dist --project-name axis-servicos
+```
+
+O `public/_headers` é copiado para `dist/_headers` e define:
+
 - headers básicos de segurança
+- cache imutável para `/_astro/*`
+- cache de 7 dias para imagens, Open Graph e favicon
 
-A rota `/404` é gerada como `axis-lp/dist/404.html`; a Vercel a usa automaticamente para endereços inexistentes. Não há rewrite de SPA, porque o site é estático.
+A rota `/404` vira `dist/404.html`; a Cloudflare Pages usa esse arquivo automaticamente para endereços inexistentes. Não há rewrite de SPA, porque o site é estático.
+
+Depois do primeiro deploy, adicione o domínio `axisservicos.com.br` em **Custom domains** no projeto Pages.
 
 ## Acessibilidade
 
