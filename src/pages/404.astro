@@ -1,0 +1,62 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Button from "../components/Button.astro";
+
+const title = "Página não encontrada | Axis Serviços";
+const description =
+  "O endereço mudou ou nunca existiu. Volte à home ou converse sobre o projeto com a Axis Serviços.";
+---
+
+<BaseLayout title={title} description={description} homeAnchors={false} noindex>
+  <section class="relative min-h-[100svh] overflow-hidden bg-night text-night-ink">
+    <div
+      class="pointer-events-none absolute -right-[14rem] top-[10%] size-[38rem] rounded-full bg-brand/15 blur-[120px]"
+      aria-hidden="true"
+    ></div>
+    <div
+      class="pointer-events-none absolute -left-[18rem] bottom-[-12rem] size-[32rem] rounded-full bg-amber/8 blur-[110px]"
+      aria-hidden="true"
+    ></div>
+
+    <div class="shell relative flex min-h-[100svh] flex-col justify-center pb-16 pt-28 lg:pt-32">
+      <div class="grid-page items-center gap-y-12">
+        <div class="col-span-4 md:col-span-6 lg:col-span-6">
+          <span class="block h-1 w-16 bg-brand" data-hero-rise style="--i:0" aria-hidden="true"></span>
+          <p
+            class="mt-6 font-heading text-[clamp(4rem,12vw,9rem)] font-semibold leading-none tracking-[-0.06em] text-night-ink/10"
+            aria-hidden="true"
+            data-hero-rise
+            style="--i:1"
+          >
+            404
+          </p>
+          <h1 class="display mt-2 max-w-[11ch]" data-hero-rise style="--i:2">Página não encontrada</h1>
+        </div>
+
+        <div class="col-span-4 md:col-span-6 lg:col-span-5 lg:col-start-8" data-hero-rise style="--i:3">
+          <p class="max-w-[34ch] text-lead text-night-ink/85" data-hero-rise style="--i:4">
+            O endereço mudou ou nunca existiu. Volte à home ou converse sobre o projeto.
+          </p>
+
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            <div class="w-full sm:w-auto" data-hero-rise style="--i:5">
+              <Button href="/" variant="primary" label="Voltar à home" class="w-full" />
+            </div>
+            <div class="w-full sm:w-auto" data-hero-rise style="--i:6">
+              <Button
+                href="/#contato"
+                variant="secondary"
+                label="Conversar sobre o projeto"
+                class="w-full"
+              />
+            </div>
+          </div>
+
+          <p class="mt-5 max-w-[38ch] text-small leading-snug text-night-muted" data-hero-rise style="--i:7">
+            Se você chegou por um link antigo, o endereço pode ter mudado.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

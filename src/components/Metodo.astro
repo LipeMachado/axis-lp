@@ -1,0 +1,132 @@
+---
+import { ArrowUpRight, Check } from "@lucide/astro";
+import Button from "./Button.astro";
+
+const etapas = [
+  {
+    nome: "Descoberta",
+    texto: "Entendemos o problema e mapeamos o que existe.",
+  },
+  {
+    nome: "Proposta e escopo",
+    texto: "Escopo, faixa e prazo por escrito, antes de decidir.",
+  },
+  {
+    nome: "Construção e entrega",
+    texto: "Entregas em etapas, cada uma com aprovação.",
+  },
+  {
+    nome: "Entrada no ar e autonomia",
+    texto: "No ar com documentação, treinamento e acessos confirmados.",
+  },
+  {
+    nome: "Suporte e evolução",
+    texto: "Manutenção e melhorias depois do lançamento.",
+  },
+];
+
+const fica = [
+  "Descrição do que foi feito e do motivo.",
+  "Registro das decisões e aprovações.",
+  "Mapa de contas e acessos, sem senha no documento.",
+  "Guia de uso e o que fazer se algo falhar.",
+];
+---
+
+<section id="metodo" class="section section-brand scroll-mt-nav">
+  <div class="shell">
+    <div class="grid-page gap-y-6">
+      <div class="col-span-4 md:col-span-4 lg:col-span-6">
+        <h2 class="head max-w-[9ch]">Como trabalhamos</h2>
+      </div>
+      <div class="col-span-4 md:col-span-2 lg:col-span-4 lg:col-start-9">
+        <p class="lead max-w-[29ch] text-brand-ink">
+          Cinco etapas, do entendimento ao suporte contínuo. Nada aqui é promessa de prazo ou preço.
+        </p>
+      </div>
+    </div>
+
+    <div class="relative mt-14 lg:mt-20" data-metodo>
+      <div class="absolute inset-x-0 top-0 hidden h-[3px] origin-left bg-brand-ink/35 lg:block" data-axis-line></div>
+
+      <ol class="grid gap-9 lg:grid-cols-5 lg:gap-6">
+        {etapas.map((etapa) => (
+          <li class="relative border-s-[3px] border-brand-ink/30 ps-5 lg:border-s-0 lg:ps-0 lg:pt-9"-item>
+            <span class="absolute -start-[7px] top-1 size-3 bg-brand-ink lg:-top-[7px] lg:start-0" aria-hidden="true"></span>
+            <h3 class="max-w-[12ch] font-heading text-lead font-semibold leading-[1.05] tracking-[-0.02em]">
+              {etapa.nome}
+            </h3>
+            <p class="mt-3 max-w-[25ch] text-body leading-snug text-brand-ink/85">{etapa.texto}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <div class="mt-12 flex flex-wrap items-center justify-between gap-4">
+      <p class="max-w-[58ch] text-body leading-snug text-brand-ink/80">
+        Prazo, preço e disponibilidade não são publicados. Escopo, faixa e prazo vêm na proposta, depois da conversa.
+      </p>
+      <a href="#contato" class="link-underline inline-flex items-center gap-2 text-small font-bold">
+        Conversar sobre o projeto
+        <ArrowUpRight size={17} stroke-width={1.7} />
+      </a>
+    </div>
+
+    <div class="mt-20 grid-page items-center gap-y-10 lg:mt-28">
+      <div class="col-span-4 md:col-span-6 lg:col-span-5">
+        <figure>
+          <div class="overflow-hidden bg-night-3"-item>
+            <img
+              src="/images/muse/plate-keys-wide.webp"
+              alt="Quatro chaves com etiquetas de papel ao lado de uma pasta fechada."
+              width="1200"
+              height="800"
+              loading="eager"
+              decoding="async"
+              class="aspect-[3/2] w-full object-cover"
+            />
+          </div>
+        </figure>
+      </div>
+
+      <div class="col-span-4 md:col-span-6 lg:col-span-6 lg:col-start-7">
+        <h3 class="subhead max-w-[16ch]">O que fica com você</h3>
+        <p class="mt-5 max-w-[36ch] text-lead text-brand-ink/90">
+          Documentação, treinamento e registro de decisões na entrega. Sua equipe muda o que precisar.
+        </p>
+        <ul class="mt-7 grid gap-3">
+          {fica.map((item) => (
+            <li class="flex items-start gap-3 text-body leading-snug">
+              <span class="mt-0.5 grid size-6 shrink-0 place-items-center bg-brand-ink text-brand">
+                <Check size={15} stroke-width={2} aria-hidden="true" />
+              </span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+        <div class="mt-8">
+          <Button href="#contato" variant="night" label="Conversar sobre o projeto" class="w-full sm:w-auto" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { animate, inView } from "motion";
+
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const line = document.querySelector<HTMLElement>("[data-axis-line]");
+  const metodo = document.querySelector<HTMLElement>("[data-metodo]");
+
+  if (!reduce && line && metodo) {
+    line.style.transform = "scaleX(0)";
+    inView(
+      metodo,
+      () => {
+        animate(line, { transform: ["scaleX(0)", "scaleX(1)"] }, { duration: 1.2, ease: [0.22, 1, 0.36, 1] });
+      },
+      { amount: 0.35 }
+    );
+  }
+</script>

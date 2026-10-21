@@ -1,0 +1,54 @@
+---
+import { ArrowRight, ArrowUpRight } from "@lucide/astro";
+
+interface Props {
+  href?: string;
+  variant?: "primary" | "secondary" | "night";
+  class?: string;
+  type?: "button" | "submit";
+  arrow?: "right" | "up-right" | "none";
+  label?: string;
+  disabled?: boolean;
+}
+
+const {
+  href,
+  variant = "primary",
+  class: className = "",
+  type = "button",
+  arrow = "right",
+  label,
+  disabled = false,
+} = Astro.props;
+
+const base = "btn group";
+const variants = {
+  primary: "btn-primary",
+  secondary: "btn-secondary",
+  night: "btn-night",
+};
+const classes = `${base} ${variants[variant]} ${className}`;
+const Icon = arrow === "up-right" ? ArrowUpRight : ArrowRight;
+---
+
+{
+  href ? (
+    <a href={href} class={classes}>
+      <span>{label ?? <slot />}</span>
+      {arrow !== "none" && (
+        <span class="btn-icon" aria-hidden="true">
+          <Icon size={18} stroke-width={1.7} />
+        </span>
+      )}
+    </a>
+  ) : (
+    <button type={type} class={classes} disabled={disabled}>
+      <span>{label ?? <slot />}</span>
+      {arrow !== "none" && (
+        <span class="btn-icon" aria-hidden="true">
+          <Icon size={18} stroke-width={1.7} />
+        </span>
+      )}
+    </button>
+  )
+}

@@ -1,0 +1,171 @@
+---
+import { ArrowUpRight, Boxes, FileCheck2, Headset, MonitorSmartphone, Server, Workflow } from "@lucide/astro";
+import FrentePreview from "./FrentePreview.astro";
+
+const defaultService = "auditoria";
+
+const frentes = [
+  {
+    id: "sites",
+    icon: MonitorSmartphone,
+    name: "Sites e plataformas web",
+    message: "Site e plataforma que sua equipe consegue manter.",
+    summary: "Site institucional, landing page, catálogo ou portal que sua equipe consegue atualizar.",
+  },
+  {
+    id: "sistemas",
+    icon: Boxes,
+    name: "Sistemas sob medida",
+    message: "Quando o software pronto não resolve, construímos o que sua operação precisa.",
+    summary: "Software feito para o processo da sua empresa, quando o produto pronto não resolve.",
+  },
+  {
+    id: "integracoes",
+    icon: Workflow,
+    name: "Integrações e automação",
+    message: "Sistemas que se falam. Tarefas que se resolvem sozinhas.",
+    summary: "Sistemas que trocam dados sem repasse manual, com falha monitorada.",
+  },
+  {
+    id: "auditoria",
+    icon: FileCheck2,
+    name: "Auditoria e consultoria técnica",
+    message: "Antes de decidir, saiba o que existe e o que está em risco.",
+    summary: "Diagnóstico do que existe, em leitura e sem alterar nada, antes de decidir.",
+  },
+  {
+    id: "suporte",
+    icon: Headset,
+    name: "Suporte técnico recorrente",
+    message: "Alguém responde quando a tecnologia para.",
+    summary: "Atendimento com registro para quando algo quebra ou precisa de ajuste.",
+  },
+  {
+    id: "infra",
+    icon: Server,
+    name: "Infraestrutura e cloud",
+    message: "Hospedagem, domínio, e-mail e backup com dono e documentação.",
+    summary: "Hospedagem, domínio, e-mail e backup com dono, registro e documentação.",
+  },
+];
+---
+
+<section id="frentes" class="section scroll-mt-nav bg-paper text-ink">
+  <div class="shell">
+    <div class="grid-page gap-y-6">
+      <div class="col-span-4 md:col-span-4 lg:col-span-6"-item>
+        <h2 class="head max-w-[10ch]">O que fazemos</h2>
+      </div>
+      <div class="col-span-4 md:col-span-2 lg:col-span-4 lg:col-start-9"-item>
+        <p class="lead max-w-[30ch]">
+          Seis frentes sob o mesmo teto. Uma conversa cobre desenvolvimento e TI.
+        </p>
+        <p class="mt-4 max-w-[38ch] text-small leading-snug text-muted">
+          Escolha uma frente para ver o tipo de problema que ela resolve e o que fica com a sua equipe.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-12 grid-page items-start gap-y-8 lg:mt-16">
+      <div class="col-span-4 hidden md:col-span-6 lg:col-span-5 lg:sticky lg:top-8 lg:block">
+        <div class="relative min-h-[27rem]" data-preview-frame aria-live="polite">
+          {frentes.map((frente) => (
+            <div data-preview-panel={frente.id} hidden={frente.id !== defaultService}>
+              <FrentePreview service={frente.id} name={frente.name} message={frente.message} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div class="col-span-4 md:col-span-6 lg:col-span-7">
+        <div>
+          {frentes.map((frente) => {
+            const Icon = frente.icon;
+            return (
+              <a
+                href="#contato"
+                data-service-link={frente.id}
+                data-service-row={frente.id}
+                data-active={frente.id === defaultService ? "true" : "false"}
+                class="group relative flex w-full items-start gap-4 py-6 ps-4 text-start transition-colors duration-200 hover:bg-surface lg:data-[active=true]:bg-surface sm:gap-6 sm:py-7 sm:ps-6"-item
+              >
+                <span class="absolute inset-y-0 start-0 w-1 bg-brand opacity-0 transition-opacity duration-200 lg:group-data-[active=true]:opacity-100"></span>
+                <span class="mt-0.5 hidden size-10 shrink-0 place-items-center bg-surface-2 text-ink transition-colors duration-200 group-hover:bg-brand group-hover:text-brand-ink lg:grid lg:group-data-[active=true]:bg-brand lg:group-data-[active=true]:text-brand-ink">
+                  <Icon size={20} stroke-width={1.6} aria-hidden="true" />
+                </span>
+                <span class="min-w-0 flex-1">
+                  <span class="block font-body font-bold leading-[1.05] tracking-[-0.01em] md:text-lead md:leading-[1.1] md:tracking-[-0.02em]">
+                    {frente.name}
+                  </span>
+                  <span class="mt-2 block max-w-[44ch] text-body leading-snug text-ink">
+                    {frente.message}
+                  </span>
+                  <span class="mt-1.5 block max-w-[52ch] text-small leading-snug text-muted">
+                    {frente.summary}
+                  </span>
+                </span>
+                <ArrowUpRight
+                  size={20}
+                  stroke-width={1.5}
+                  class="mt-1 hidden shrink-0 text-muted transition-transform duration-200 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-ink lg:block"
+                  aria-hidden="true"
+                />
+              </a>
+            );
+          })}
+        </div>
+
+        <div class="mt-6 flex flex-col gap-3 ps-4 sm:ps-6">
+          <p class="max-w-[48ch] text-small leading-snug text-muted">
+            Interfaces de exemplo, com dados ilustrativos.
+          </p>
+          <a href="#metodo" class="link-underline inline-flex w-fit items-center gap-2 text-small font-bold">
+            Ver como trabalhamos
+            <ArrowUpRight size={17} stroke-width={1.7} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { animate } from "motion";
+
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const buttons = [...document.querySelectorAll<HTMLAnchorElement>("[data-service-row]")];
+  const panels = [...document.querySelectorAll<HTMLElement>("[data-preview-panel]")];
+
+  if (buttons.length && panels.length) {
+    let current = "auditoria";
+
+    const select = (id: string, moveFocus = false) => {
+      if (id === current) return;
+      current = id;
+
+      for (const button of buttons) {
+        const active = button.dataset.serviceRow === id;
+        button.dataset.active = String(active);
+        if (active && moveFocus) button.focus();
+      }
+
+      for (const panel of panels) {
+        const active = panel.dataset.previewPanel === id;
+        panel.hidden = !active;
+        if (active && !reduce) {
+          animate(panel, { opacity: [0, 1], y: [12, 0] }, { duration: 0.38, ease: [0.22, 1, 0.36, 1] });
+        }
+      }
+    };
+
+    for (const button of buttons) {
+      const id = button.dataset.serviceRow!;
+      button.addEventListener("pointerenter", () => select(id));
+      button.addEventListener("focus", () => select(id));
+    }
+
+    window.addEventListener("axis:select-service", ((event: CustomEvent<{ id: string }>) => {
+      select(event.detail.id);
+    }) as EventListener);
+  }
+</script>

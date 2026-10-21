@@ -1,0 +1,311 @@
+---
+import {
+  Activity,
+  Boxes,
+  Cable,
+  ChevronDown,
+  CircleAlert,
+  Database,
+  FileCheck2,
+  Globe2,
+  HardDrive,
+  Headset,
+  KeyRound,
+  Server,
+  ShieldCheck,
+  Workflow,
+} from "@lucide/astro";
+
+const iconMap = {
+  globe: Globe2,
+  database: Database,
+  workflow: Workflow,
+  drive: HardDrive,
+  shield: ShieldCheck,
+  server: Server,
+  key: KeyRound,
+  headset: Headset,
+  cable: Cable,
+  files: FileCheck2,
+  alert: CircleAlert,
+  boxes: Boxes,
+  activity: Activity,
+};
+
+const scenarios = [
+  {
+    id: "operacao",
+    label: "Operação",
+    summary: "Operação em dia",
+    summaryTone: "ok",
+    hint: "O que está no ar, o que está monitorado e o que vence.",
+    rows: [
+      { icon: "globe", name: "Site institucional", meta: "Produção", status: "No ar", tone: "ok" },
+      { icon: "database", name: "Sistema de pedidos", meta: "Produção", status: "Monitorado", tone: "ok" },
+      { icon: "workflow", name: "Integração loja e CRM", meta: "A cada 5 min", status: "Sincronizada", tone: "ok" },
+      { icon: "drive", name: "Backup diário", meta: "Última: 03:00", status: "Em dia", tone: "ok" },
+      { icon: "shield", name: "Certificado do site", meta: "Renovação", status: "Vence em 20 dias", tone: "warn" },
+    ],
+    bars: [42, 57, 49, 66, 54, 71, 63, 78, 69, 84, 76, 88, 81, 92],
+    barsTone: "ok",
+    report: [
+      { label: "Fato", text: "O certificado vence em 20 dias.", tone: "ok" },
+      { label: "Hipótese", text: "A queda de ontem veio da renovação automática.", tone: "soft" },
+      { label: "Não verificado", text: "O painel, sem acesso.", tone: "warn" },
+    ],
+  },
+  {
+    id: "diagnostico",
+    label: "Diagnóstico",
+    summary: "Leitura sem escrita",
+    summaryTone: "warn",
+    hint: "O que foi examinado, o que é suposição e o que ficou de fora.",
+    rows: [
+      { icon: "globe", name: "Domínio", meta: "Registro", status: "Vence em 30 dias", tone: "warn" },
+      { icon: "server", name: "Hospedagem", meta: "Custo mensal", status: "Acima do necessário", tone: "warn" },
+      { icon: "files", name: "Código do painel", meta: "Acesso", status: "Não verificado", tone: "soft" },
+      { icon: "drive", name: "Backup", meta: "Última cópia", status: "Sem cópia recente", tone: "danger" },
+      { icon: "key", name: "Acessos", meta: "Responsável", status: "Sem registro", tone: "soft" },
+    ],
+    bars: [71, 64, 76, 58, 81, 69, 54, 62, 48, 57, 43, 51, 38, 46],
+    barsTone: "warn",
+    report: [
+      { label: "Fato", text: "O domínio vence em 30 dias e está em nome de terceiros.", tone: "warn" },
+      { label: "Hipótese", text: "A lentidão vem da hospedagem atual.", tone: "soft" },
+      { label: "Não verificado", text: "O código do painel, sem acesso.", tone: "soft" },
+    ],
+  },
+  {
+    id: "incidente",
+    label: "Incidente",
+    summary: "Triagem em andamento",
+    summaryTone: "danger",
+    hint: "A ordem do externo ao interno, com o próximo passo registrado.",
+    rows: [
+      { icon: "globe", name: "Site", meta: "Disponibilidade", status: "Fora do ar", tone: "danger" },
+      { icon: "activity", name: "E-mail", meta: "Entrega", status: "Parado", tone: "danger" },
+      { icon: "workflow", name: "DNS", meta: "Resolução", status: "Em verificação", tone: "warn" },
+      { icon: "server", name: "Hospedagem", meta: "Camada", status: "Aguardando leitura", tone: "soft" },
+      { icon: "headset", name: "Responsável", meta: "Plantão", status: "Notificado", tone: "ok" },
+    ],
+    bars: [88, 82, 91, 74, 86, 62, 71, 49, 58, 36, 44, 29, 38, 24],
+    barsTone: "danger",
+    report: [
+      { label: "Fato", text: "O site não responde desde 09:42.", tone: "danger" },
+      { label: "Hipótese", text: "O certificado expirou após a renovação automática.", tone: "soft" },
+      { label: "Não verificado", text: "O servidor de origem, sem acesso.", tone: "soft" },
+    ],
+  },
+];
+---
+
+<section
+  class="panel relative overflow-hidden"
+  data-console
+ 
+  aria-label="Painel de operação ilustrativo"
+>
+  <div class="flex flex-wrap items-center justify-between gap-3 bg-night-3 px-4 py-3 sm:px-5">
+    <div class="flex items-center gap-3">
+      <span class="block h-5 w-1 bg-brand" aria-hidden="true"></span>
+      <p class="font-body text-body font-bold leading-none">Painel de operação</p>
+    </div>
+    <p class="text-small font-medium text-night-muted">Exemplo ilustrativo</p>
+  </div>
+
+  <div class="bg-night-3/40">
+    <div class="flex items-stretch gap-0 overflow-x-auto no-scrollbar" role="tablist" aria-label="Cenário do painel">
+      {scenarios.map((scenario, index) => (
+        <button
+          type="button"
+          role="tab"
+          id={`tab-${scenario.id}`}
+          aria-controls={`panel-${scenario.id}`}
+          aria-selected={index === 0 ? "true" : "false"}
+          tabindex={index === 0 ? 0 : -1}
+          data-scenario-tab={scenario.id}
+          class="relative shrink-0 px-2 py-3 text-small font-semibold text-night-muted transition-colors duration-150 hover:text-night-ink aria-selected:text-night-ink sm:px-5 sm:text-small"
+        >
+          {scenario.label}
+          <span class="absolute inset-x-1 bottom-0 h-[3px] bg-brand opacity-0 transition-opacity duration-150 sm:inset-x-5" data-tab-bar></span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div class="bg-night-3/20 px-4 py-2 lg:hidden">
+    <button
+      type="button"
+      data-console-toggle
+      aria-expanded="false"
+      class="group flex min-h-11 w-full items-center justify-between gap-3 text-small font-semibold text-night-muted transition-colors hover:text-night-ink"
+    >
+      Ver leitura
+      <ChevronDown size={17} stroke-width={1.6} class="transition-transform duration-200 group-aria-expanded:rotate-180" aria-hidden="true" />
+    </button>
+  </div>
+
+  {scenarios.map((scenario, index) => {
+    return (
+      <div
+        id={`panel-${scenario.id}`}
+        role="tabpanel"
+        aria-labelledby={`tab-${scenario.id}`}
+        data-scenario-panel={scenario.id}
+        hidden={index !== 0}
+        class="console-grid min-h-[27rem]"
+      >
+        <div class="bg-night-3/30 px-4 py-5 sm:px-5">
+          <div class="flex items-start justify-between gap-4">
+            <div>
+              <p class="font-body text-body font-bold leading-tight">{scenario.summary}</p>
+              <p class="mt-1 max-w-[34ch] text-small leading-snug text-night-muted">{scenario.hint}</p>
+            </div>
+            <span
+              class={`status mt-1 ${scenario.summaryTone === "danger" ? "status-danger" : scenario.summaryTone === "warn" ? "status-warn" : "status-ok"}`}
+            >
+              {scenario.summaryTone === "danger" ? "Ação" : scenario.summaryTone === "warn" ? "Atenção" : "Estável"}
+            </span>
+          </div>
+
+          <ul class="mt-5">
+            {scenario.rows.map((row) => {
+              const RowIcon = iconMap[row.icon as keyof typeof iconMap] ?? Activity;
+              return (
+                <li class="flex items-center justify-between gap-3 px-2 py-3 odd:bg-night-3/30">
+                  <span class="flex min-w-0 items-center gap-3">
+                    <RowIcon size={18} stroke-width={1.6} class="shrink-0 text-night-muted" aria-hidden="true" />
+                    <span class="min-w-0">
+                      <span class="block truncate text-small font-semibold leading-tight">{row.name}</span>
+                      <span class="block text-small leading-tight text-night-muted">{row.meta}</span>
+                    </span>
+                  </span>
+                  <span
+                    class={`status ${row.tone === "danger" ? "status-danger" : row.tone === "warn" ? "status-warn" : row.tone === "soft" ? "status-soft" : "status-ok"}`}
+                  >
+                    {row.status}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        <div class="flex-col justify-between px-4 py-5 sm:px-5" data-console-detail>
+          <div>
+            <div class="flex items-end justify-between gap-4">
+              <div>
+                <p class="text-small font-semibold text-night-muted">Movimento de 14 dias</p>
+                <p class="mt-1 font-body text-lead font-bold leading-none">
+                  {scenario.barsTone === "danger" ? "Queda às 09:42" : scenario.barsTone === "warn" ? "Leitura concluída" : "Sem interrupção"}
+                </p>
+              </div>
+              <Activity size={22} stroke-width={1.5} class="text-brand" aria-hidden="true" />
+            </div>
+
+            <div class="mt-7 flex h-28 items-end gap-[5px]" aria-hidden="true">
+              {scenario.bars.map((bar, barIndex) => (
+                <span
+                  class={`chart-bar min-w-0 flex-1 ${scenario.barsTone === "danger" ? "bg-danger" : scenario.barsTone === "warn" ? "bg-warning" : "bg-success"}`}
+                  style={`--h:${bar}%; --i:${barIndex};`}
+                ></span>
+              ))}
+            </div>
+            <div class="mt-2 flex justify-between text-small font-medium text-night-muted">
+              <span>há 14 dias</span>
+              <span>agora</span>
+            </div>
+          </div>
+
+          <div class="mt-6 grid gap-2" aria-live="polite">
+            {scenario.report.map((item) => (
+              <div class="grid grid-cols-[7.5rem_1fr] gap-3 bg-night-3/70 px-3 py-2.5">
+                <span
+                  class={`text-small font-bold leading-snug ${item.tone === "warn" ? "text-warning" : item.tone === "danger" ? "text-danger" : item.tone === "soft" ? "text-night-muted" : "text-success"}`}
+                >
+                  {item.label}
+                </span>
+                <span class="text-small leading-snug text-night-ink/90">{item.text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  })}
+
+  <div class="flex flex-wrap items-center justify-end gap-2 bg-night-3/60 px-4 py-2.5 text-small font-medium text-night-muted sm:px-5">
+    <span class="status status-ok">Registro ativo</span>
+    <span>Última leitura: agora</span>
+  </div>
+</section>
+
+<script>
+  import { animate, stagger } from "motion";
+
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const consoleEl = document.querySelector<HTMLElement>("[data-console]");
+  const tabs = [...document.querySelectorAll<HTMLButtonElement>("[data-scenario-tab]")];
+  const panels = [...document.querySelectorAll<HTMLElement>("[data-scenario-panel]")];
+
+  if (consoleEl && tabs.length && panels.length) {
+    const select = (id: string, focus = false) => {
+      for (const tab of tabs) {
+        const active = tab.dataset.scenarioTab === id;
+        tab.setAttribute("aria-selected", String(active));
+        tab.tabIndex = active ? 0 : -1;
+        const bar = tab.querySelector<HTMLElement>("[data-tab-bar]");
+        if (bar) bar.style.opacity = active ? "1" : "0";
+        if (active && focus) tab.focus();
+      }
+
+      for (const panel of panels) {
+        const active = panel.dataset.scenarioPanel === id;
+        panel.hidden = !active;
+        if (!active) continue;
+
+        if (!reduce) {
+          const rows = panel.querySelectorAll("li, [aria-live] > div");
+          const bars = panel.querySelectorAll<HTMLElement>(".chart-bar");
+          animate(panel, { opacity: [0, 1], y: [10, 0] }, { duration: 0.35, ease: [0.22, 1, 0.36, 1] });
+          animate(rows, { opacity: [0, 1], y: [6, 0] }, { duration: 0.3, delay: stagger(0.035, { startDelay: 0.08 }) });
+          animate(bars, { scaleY: [0.25, 1] }, { duration: 0.62, delay: stagger(0.018), ease: [0.22, 1, 0.36, 1] });
+        }
+      }
+    };
+
+    for (const tab of tabs) {
+      tab.addEventListener("click", () => select(tab.dataset.scenarioTab!));
+      tab.addEventListener("keydown", (event) => {
+        if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+        event.preventDefault();
+        const current = tabs.indexOf(tab);
+        const next = event.key === "ArrowRight" ? (current + 1) % tabs.length : (current - 1 + tabs.length) % tabs.length;
+        select(tabs[next].dataset.scenarioTab!, true);
+      });
+    }
+
+    select("operacao");
+
+    const toggle = consoleEl.querySelector<HTMLButtonElement>("[data-console-toggle]");
+    toggle?.addEventListener("click", () => {
+      const open = consoleEl.classList.toggle("is-reading");
+      toggle.setAttribute("aria-expanded", String(open));
+      const label = toggle.childNodes[0];
+      if (label) label.textContent = open ? "Ocultar leitura" : "Ver leitura";
+      if (open && !reduce) {
+        const detail = consoleEl.querySelector<HTMLElement>("[data-scenario-panel]:not([hidden]) [data-console-detail]");
+        detail?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    });
+
+    if (!reduce) {
+      const firstPanel = panels[0];
+      animate(
+        firstPanel.querySelectorAll(".chart-bar"),
+        { scaleY: [0.18, 1] },
+        { duration: 0.9, delay: stagger(0.028, { startDelay: 0.45 }), ease: [0.22, 1, 0.36, 1] }
+      );
+    }
+  }
+</script>

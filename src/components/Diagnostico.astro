@@ -1,0 +1,225 @@
+---
+import { ArrowRight, RefreshCw } from "@lucide/astro";
+---
+
+<section id="diagnostico" class="section bg-surface text-ink scroll-mt-nav">
+  <div class="shell">
+    <div class="grid-page gap-y-10">
+      <div class="col-span-4 md:col-span-6 lg:col-span-5">
+        <h2 class="head max-w-[9ch]"-item>Como decidimos</h2>
+        <p class="mt-5 max-w-[34ch] text-lead"-item>
+          Cada escolha técnica vem com o motivo para o negócio.
+        </p>
+        <p class="mt-4 max-w-[46ch] text-body leading-snug text-muted"-item>
+          O relatório separa o que foi verificado do que é suposição e do que ficou fora. A recomendação vem com custo e consequência.
+        </p>
+
+        <ul class="mt-9 grid gap-0"-item>
+          {[
+            "Fato separado de hipótese.",
+            "Limite declarado em cada achado.",
+            "Recomendação com custo e consequência.",
+          ].map((item) => (
+            <li class="flex items-center gap-4 py-4 text-body font-semibold">
+              <span class="size-2.5 shrink-0 bg-brand" aria-hidden="true"></span>
+              {item}
+            </li>
+          ))}
+        </ul>
+
+        <p class="mt-8 max-w-[34ch] font-heading text-lead font-semibold leading-[1.15] tracking-[-0.015em]"-item>
+          Sem evidência, a recomendação diz o que não foi verificado.
+        </p>
+      </div>
+
+      <div class="col-span-4 md:col-span-6 lg:col-span-6 lg:col-start-7">
+        <div class="bg-night text-night-ink" data-report-item>
+          <div class="flex flex-wrap items-center justify-between gap-3 bg-night-3 px-4 py-3">
+            <div class="flex items-center gap-2.5">
+              <span class="block h-4 w-1 bg-brand" aria-hidden="true"></span>
+              <p class="font-body text-small font-bold">Exemplo de item de relatório</p>
+            </div>
+            <div class="flex items-center gap-2">
+              <span class="text-small font-medium text-night-muted">Exemplo ilustrativo</span>
+              <button
+                type="button"
+                data-report-next
+                class="inline-flex items-center gap-1.5 bg-night-4 px-2.5 py-1.5 text-small font-bold text-night-ink transition-colors hover:bg-brand hover:text-brand-ink"
+              >
+                <RefreshCw size={13} stroke-width={1.8} />
+                Ver outro
+              </button>
+            </div>
+          </div>
+
+          <div class="p-4 sm:p-5" aria-live="polite">
+            <div class="flex items-center justify-between gap-3 pb-3">
+              <p class="text-small font-semibold text-night-muted" data-report-label>
+                Domínio
+              </p>
+              <span class="status status-warn" data-report-priority>Prioridade alta</span>
+            </div>
+
+            <div class="mt-4 grid gap-2" data-report-body>
+              <div class="bg-night-3 p-3">
+                <p class="text-small font-bold text-success">Fato</p>
+                <p class="mt-1 text-small leading-snug" data-report-fato>
+                  O domínio vence em 30 dias e está em nome de terceiros.
+                </p>
+              </div>
+              <div class="bg-night-3 p-3">
+                <p class="text-small font-bold text-night-muted">Hipótese</p>
+                <p class="mt-1 text-small leading-snug" data-report-hipotese>
+                  A lentidão vem da hospedagem atual.
+                </p>
+              </div>
+              <div class="bg-night-3 p-3">
+                <p class="text-small font-bold text-warning">Não verificado</p>
+                <p class="mt-1 text-small leading-snug" data-report-nao-verificado>
+                  O código do painel, sem acesso.
+                </p>
+              </div>
+            </div>
+
+            <div class="mt-4 pt-4">
+              <p class="text-small font-bold text-brand">Recomendação</p>
+              <p class="mt-1.5 text-body font-semibold leading-snug" data-report-recomendacao>
+                Transferir o domínio para o nome da empresa e revisar a hospedagem.
+              </p>
+              <div class="mt-4 grid gap-3 sm:grid-cols-2">
+                <div>
+                  <p class="text-small font-semibold text-night-muted">Custo de manter</p>
+                  <p class="mt-1 text-small leading-snug" data-report-custo>Taxa de transferência e uma hora de configuração.</p>
+                </div>
+                <div>
+                  <p class="text-small font-semibold text-night-muted">Consequência</p>
+                  <p class="mt-1 text-small leading-snug" data-report-consequencia>A empresa passa a controlar o próprio endereço.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between gap-3 bg-night-3/60 px-4 py-2.5 text-small font-medium text-night-muted">
+            <span>Leitura sem escrita. Ambiente não alterado.</span>
+            <span data-report-esforco>Esforço médio</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-16 grid-page items-stretch gap-y-8 lg:mt-24">
+      <figure class="col-span-4 md:col-span-6 lg:col-span-7">
+        <div class="h-full overflow-hidden bg-surface-2"-item>
+          <img
+            src="/images/muse/plate-report-wide.webp"
+            alt="Folha de relatório com clipe, anotações a lápis e uma linha âmbar."
+            width="1200"
+            height="800"
+            loading="eager"
+            decoding="async"
+            class="aspect-[3/2] h-full w-full object-cover"
+          />
+        </div>
+      </figure>
+
+      <div class="col-span-4 md:col-span-6 lg:col-span-4 lg:col-start-9">
+        <div class="flex h-full flex-col justify-between bg-night p-5 text-night-ink sm:p-7"-item>
+          <div>
+            <p class="max-w-[18ch] font-heading text-lead font-semibold leading-[1.12] tracking-[-0.015em]">
+              A decisão fica com você. O motivo fica no registro.
+            </p>
+            <p class="mt-4 max-w-[34ch] text-body leading-snug text-night-ink/75">
+              O relatório, os acessos e o próximo passo ficam documentados. A empresa não depende de uma pessoa para continuar.
+            </p>
+            <ul class="mt-6 grid gap-2">
+              {[
+                ["O que foi feito", "A entrega descrita, sem caixa-preta."],
+                ["Por que foi feito", "A decisão com custo e consequência."],
+                ["O que fazer se falhar", "O próximo passo, com responsável."],
+              ].map(([titulo, texto]) => (
+                <li class="flex items-start gap-3 py-1.5">
+                  <span class="mt-2 size-2 shrink-0 bg-brand" aria-hidden="true"></span>
+                  <span class="grid gap-0.5">
+                    <span class="text-small font-bold text-brand">{titulo}</span>
+                    <span class="text-small leading-snug text-night-ink/80">{texto}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <a href="#contato" class="link-underline mt-6 inline-flex items-center gap-2 text-small font-bold">
+            Conversar sobre o projeto
+            <ArrowRight size={17} stroke-width={1.7} />
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const report = document.querySelector<HTMLElement>("[data-report]");
+  const next = document.querySelector<HTMLButtonElement>("[data-report-next]");
+
+  const examples = [
+    {
+      label: "Certificado",
+      prioridade: "Prioridade alta",
+      fato: "O certificado vence em 20 dias.",
+      hipotese: "A queda de ontem veio da renovação automática.",
+      naoVerificado: "O painel, sem acesso.",
+      recomendacao: "Renovar antes do vencimento e monitorar a renovação automática.",
+      custo: "Uma hora de trabalho.",
+      consequencia: "Evita uma queda previsível.",
+      esforco: "Esforço baixo",
+    },
+    {
+      label: "Domínio",
+      prioridade: "Prioridade alta",
+      fato: "O domínio vence em 30 dias e está em nome de terceiros.",
+      hipotese: "A lentidão vem da hospedagem atual.",
+      naoVerificado: "O código do painel, sem acesso.",
+      recomendacao: "Transferir o domínio para o nome da empresa e revisar a hospedagem.",
+      custo: "Taxa de transferência e uma hora de configuração.",
+      consequencia: "A empresa passa a controlar o próprio endereço.",
+      esforco: "Esforço médio",
+    },
+  ];
+
+  if (report && next) {
+    let index = 1;
+    const set = (key: string, value: string) => {
+      const el = report.querySelector<HTMLElement>(`[data-report-${key}]`);
+      if (el) el.textContent = value;
+    };
+
+    next.addEventListener("click", () => {
+      index = (index + 1) % examples.length;
+      const item = examples[index];
+      const body = report.querySelector<HTMLElement>("[data-report-body]");
+
+      if (!reduce && body) {
+        body.animate(
+          [
+            { opacity: 1, transform: "translateY(0)" },
+            { opacity: 0, transform: "translateY(6px)" },
+            { opacity: 0, transform: "translateY(-6px)" },
+            { opacity: 1, transform: "translateY(0)" },
+          ],
+          { duration: 420, easing: "cubic-bezier(0.22, 1, 0.36, 1)" }
+        );
+      }
+
+      set("label", item.label);
+      set("priority", item.prioridade);
+      set("fato", item.fato);
+      set("hipotese", item.hipotese);
+      set("nao-verificado", item.naoVerificado);
+      set("recomendacao", item.recomendacao);
+      set("custo", item.custo);
+      set("consequencia", item.consequencia);
+      set("esforco", item.esforco);
+    });
+  }
+</script>

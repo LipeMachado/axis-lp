@@ -1,0 +1,73 @@
+---
+import Button from "./Button.astro";
+import Logo from "./Logo.astro";
+import OperationPanel from "./OperationPanel.astro";
+
+const frentes = [
+  "Sites e plataformas",
+  "Sistemas sob medida",
+  "Integrações e automação",
+  "Auditoria e consultoria",
+  "Suporte recorrente",
+  "Infraestrutura e cloud",
+];
+---
+
+<section id="topo" class="relative flex min-h-[100svh] flex-col overflow-hidden bg-night text-night-ink">
+  <div
+    class="pointer-events-none absolute -right-[18rem] top-[4rem] size-[44rem] rounded-full bg-brand/20 blur-[130px]"
+    aria-hidden="true"
+  ></div>
+  <div
+    class="pointer-events-none absolute -left-[18rem] bottom-[-10rem] size-[34rem] rounded-full bg-amber/10 blur-[120px]"
+    aria-hidden="true"
+  ></div>
+  <Logo
+    class="pointer-events-none absolute -right-[8vw] top-[9%] w-[68vw] max-w-[62rem] text-night-ink opacity-[0.028]"
+    label=""
+  />
+
+  <div class="shell relative flex flex-1 flex-col justify-center pb-10 pt-28 lg:pb-16 lg:pt-36">
+    <div class="grid-page items-center gap-y-14">
+      <div class="col-span-4 md:col-span-6 lg:col-span-12 xl:col-span-6 xl:pe-8">
+        <h1 class="display">
+          <span class="hero-line block overflow-hidden pb-[0.06em]">
+            <span style="--i:0">O parceiro técnico</span>
+          </span>
+          <span class="hero-line block overflow-hidden pb-[0.06em] text-night-muted">
+            <span style="--i:1">da sua empresa</span>
+          </span>
+        </h1>
+
+        <p class="mt-7 max-w-[31ch] text-lead text-night-ink/90" data-hero-rise style="--i:2">
+          Sites, sistemas e infraestrutura para empresas sem TI forte.
+        </p>
+        <p class="mt-4 hidden max-w-[46ch] text-body leading-snug text-night-muted sm:block" data-hero-rise style="--i:3">
+          Construímos, integramos e mantemos a operação com decisões explicadas,
+          documentação e continuidade.
+        </p>
+
+        <div class="mt-8 flex flex-wrap items-center gap-3" data-hero-rise style="--i:4">
+          <Button href="#contato" variant="primary" label="Conversar sobre o projeto" class="w-full sm:w-auto" />
+          <Button href="#frentes" variant="secondary" label="Ver o que fazemos" class="w-full sm:w-auto" />
+        </div>
+        <p class="mt-5 text-small font-medium text-night-muted" data-hero-rise style="--i:5">
+          Primeira conversa sem custo. Sem compromisso.
+        </p>
+      </div>
+
+      <div class="col-span-4 md:col-span-6 lg:col-span-12 xl:col-span-6" data-hero-panel>
+        <OperationPanel />
+      </div>
+    </div>
+  </div>
+
+  <div class="relative bg-night-2/70">
+    <div class="shell flex flex-wrap items-center justify-between gap-x-8 gap-y-2 py-4">
+      <p class="text-small font-semibold text-night-ink">Seis frentes. Um parceiro.</p>
+      <ul class="flex flex-wrap gap-x-6 gap-y-1 text-small font-medium text-night-muted">
+        {frentes.map((frente) => <li>{frente}</li>)}
+      </ul>
+    </div>
+  </div>
+</section>

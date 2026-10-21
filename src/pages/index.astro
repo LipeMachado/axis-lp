@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import Frentes from "../components/Frentes.astro";
+import Situacoes from "../components/Situacoes.astro";
+import Metodo from "../components/Metodo.astro";
+import Diagnostico from "../components/Diagnostico.astro";
+import Faq from "../components/Faq.astro";
+import Contato from "../components/Contato.astro";
+
+const title = "O parceiro técnico da sua empresa | Axis Serviços";
+const description =
+  "Parceiro técnico dedicado: a Axis constrói, integra e mantém sites, sistemas e infraestrutura para empresas que dependem de tecnologia sem ter TI interna forte.";
+---
+
+<BaseLayout title={title} description={description}>
+  <Hero />
+  <Frentes />
+  <Situacoes />
+  <Metodo />
+  <Diagnostico />
+  <Faq />
+  <Contato />
+</BaseLayout>

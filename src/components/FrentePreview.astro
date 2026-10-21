@@ -1,0 +1,282 @@
+---
+import { ArrowRight, Check, CircleAlert, Clock3, FileCheck2, Globe2, Workflow } from "@lucide/astro";
+
+interface Props {
+  service: string;
+  name: string;
+  message: string;
+}
+
+const { service, name, message } = Astro.props;
+---
+
+<div class="flex h-full min-h-[26rem] flex-col bg-night-2 text-night-ink" data-ui="frente-preview">
+  <div class="flex items-center justify-between gap-3 bg-night-3/40 px-4 py-3">
+    <div class="flex items-center gap-2.5">
+      <span class="block h-4 w-1 bg-brand" aria-hidden="true"></span>
+      <p class="font-heading text-[1rem] font-semibold leading-none">{name}</p>
+    </div>
+    <span class="text-[0.95rem] font-medium text-night-muted">Exemplo ilustrativo</span>
+  </div>
+
+  <div class="flex flex-1 flex-col p-4 sm:p-5">
+    {
+      service === "sites" && (
+        <div class="flex h-full flex-col">
+          <div class="flex items-center justify-between gap-3 pb-3">
+            <div class="flex items-center gap-1.5" aria-hidden="true">
+              <span class="size-2 bg-night-line"></span>
+              <span class="size-2 bg-night-line"></span>
+              <span class="size-2 bg-night-line"></span>
+            </div>
+            <div class="flex items-center gap-2 text-[0.95rem] font-medium text-night-muted">
+              <Globe2 size={14} stroke-width={1.5} />
+              site-institucional.exemplo
+            </div>
+            <span class="status status-ok">No ar</span>
+          </div>
+          <div class="grid flex-1 grid-cols-[1.25fr_0.75fr] gap-4 pt-4">
+            <div class="flex flex-col justify-between">
+              <div>
+                <p class="font-heading text-[1.6rem] font-semibold leading-[1.02] tracking-[-0.03em]">
+                  Uma página que a sua equipe consegue manter.
+                </p>
+                <div class="mt-4 space-y-2">
+                  <span class="block h-2 w-[82%] bg-night-4"></span>
+                  <span class="block h-2 w-[64%] bg-night-4"></span>
+                  <span class="block h-2 w-[72%] bg-night-4"></span>
+                </div>
+              </div>
+              <div class="mt-5 flex flex-wrap gap-2">
+                <span class="bg-brand px-3 py-2 text-[0.95rem] font-bold text-brand-ink">Publicar alteração</span>
+                <span class="border border-night-line px-3 py-2 text-[0.95rem] font-semibold text-night-muted">Ver rascunhos</span>
+              </div>
+            </div>
+            <div class="flex flex-col gap-2">
+              <div class="flex flex-1 items-end bg-night-3 p-3">
+                <span class="block h-[62%] w-full bg-brand/80"></span>
+              </div>
+              <div class="bg-night-3 p-3">
+                <p class="text-[0.95rem] font-semibold text-night-muted">Última publicação</p>
+                <p class="mt-1 font-heading text-[1.05rem] font-semibold">Hoje, 10:24</p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-4 flex items-center justify-between gap-3 bg-night-3/40 px-3 py-2.5 text-[0.95rem] font-medium text-night-muted">
+            <span>Sem chamado para editar o essencial.</span>
+            <span class="status status-ok">Autonomia</span>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      service === "sistemas" && (
+        <div class="flex h-full flex-col">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="font-heading text-[1.35rem] font-semibold leading-none">Pedidos da operação</p>
+              <p class="mt-1.5 text-[0.95rem] text-night-muted">Modelo antes do código. Aceite antes do ar.</p>
+            </div>
+            <span class="status status-ok">Aceite verificado</span>
+          </div>
+          <div class="mt-5 overflow-hidden">
+            <div class="grid grid-cols-[1fr_0.7fr_0.8fr] gap-2 bg-night-3 px-3 py-2 text-[0.95rem] font-bold text-night-muted">
+              <span>Pedido</span>
+              <span>Data</span>
+              <span>Responsável</span>
+            </div>
+            {[
+              ["1042", "12/05", "Estoque"],
+              ["1043", "12/05", "Financeiro"],
+              ["1044", "13/05", "Estoque"],
+              ["1045", "13/05", "Atendimento"],
+            ].map(([pedido, data, area]) => (
+              <div class="grid grid-cols-[1fr_0.7fr_0.8fr] gap-2 even:bg-night-3/30 px-3 py-2.5 text-[0.95rem]">
+                <span class="font-semibold">#{pedido}</span>
+                <span class="text-night-muted">{data}</span>
+                <span>{area}</span>
+              </div>
+            ))}
+          </div>
+          <div class="mt-auto flex items-center justify-between gap-3 bg-night-3/40 px-3 py-2.5 text-[0.95rem] font-medium text-night-muted">
+            <span>Critério de aceite conferido no ambiente de teste.</span>
+            <span class="inline-flex items-center gap-1.5 text-success"><Check size={14} /> Registrado</span>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      service === "integracoes" && (
+        <div class="flex h-full flex-col">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="font-heading text-[1.35rem] font-semibold leading-none">Fluxo entre sistemas</p>
+              <p class="mt-1.5 text-[0.95rem] text-night-muted">Sem repasse manual. Com falha monitorada.</p>
+            </div>
+            <span class="status status-ok">Sincronizado</span>
+          </div>
+          <div class="mt-7 grid grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-2">
+            {[
+              ["Loja", "Pedido criado", "ok"],
+              ["CRM", "Contato novo", "ok"],
+              ["Estoque", "Reserva", "warn"],
+            ].map(([sistema, estado, tone], index) => (
+              <>
+                {index > 0 && (
+                  <div class="flex items-center justify-center text-night-muted" aria-hidden="true">
+                    <ArrowRight size={16} stroke-width={1.5} />
+                  </div>
+                )}
+                <div class="border border-night-line bg-night-3 p-3">
+                  <p class="font-heading text-[1.05rem] font-semibold">{sistema}</p>
+                  <p class="mt-1 text-[0.95rem] text-night-muted">{estado}</p>
+                  <span class={`status mt-3 ${tone === "warn" ? "status-warn" : "status-ok"}`}>
+                    {tone === "warn" ? "Em observação" : "Sincronizado"}
+                  </span>
+                </div>
+              </>
+            ))}
+          </div>
+          <div class="mt-5 grid grid-cols-2 gap-3">
+            <div class="bg-night-3 p-3">
+              <p class="text-[0.95rem] font-semibold text-night-muted">Última sincronização</p>
+              <p class="mt-1 font-heading text-[1.15rem] font-semibold">Há 2 minutos</p>
+            </div>
+            <div class="bg-night-3 p-3">
+              <p class="text-[0.95rem] font-semibold text-night-muted">Se parar</p>
+              <p class="mt-1 font-heading text-[1.15rem] font-semibold">O monitor avisa</p>
+            </div>
+          </div>
+          <div class="mt-auto flex items-center gap-2 bg-night-3/40 px-3 py-2.5 text-[0.95rem] font-medium text-night-muted">
+            <Workflow size={15} />
+            Fluxo documentado, com responsável definido.
+          </div>
+        </div>
+      )
+    }
+
+    {
+      service === "auditoria" && (
+        <div class="flex h-full flex-col">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="font-heading text-[1.35rem] font-semibold leading-none">Item de relatório</p>
+              <p class="mt-1.5 text-[0.95rem] text-night-muted">Leitura sem escrita. Limite declarado.</p>
+            </div>
+            <span class="status status-warn">Prioridade alta</span>
+          </div>
+          <div class="mt-5 space-y-2">
+            <div class="bg-night-3 p-3">
+              <p class="text-[0.95rem] font-bold text-success">Fato</p>
+              <p class="mt-1 text-[0.95rem] leading-snug">O domínio vence em 30 dias e está em nome de terceiros.</p>
+            </div>
+            <div class="bg-night-3 p-3">
+              <p class="text-[0.95rem] font-bold text-night-muted">Hipótese</p>
+              <p class="mt-1 text-[0.95rem] leading-snug">A lentidão vem da hospedagem atual.</p>
+            </div>
+            <div class="bg-night-3 p-3">
+              <p class="text-[0.95rem] font-bold text-warning">Não verificado</p>
+              <p class="mt-1 text-[0.95rem] leading-snug">O código do painel, sem acesso.</p>
+            </div>
+          </div>
+          <div class="mt-auto flex items-center justify-between gap-3 bg-night-3/40 px-3 py-2.5 text-[0.95rem] font-medium text-night-muted">
+            <span>Recomendação com custo e consequência abaixo.</span>
+            <span class="inline-flex items-center gap-1.5"><FileCheck2 size={14} /> Relatório</span>
+          </div>
+        </div>
+      )
+    }
+
+    {
+      service === "suporte" && (
+        <div class="flex h-full flex-col">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="font-heading text-[1.35rem] font-semibold leading-none">Fila de chamados</p>
+              <p class="mt-1.5 text-[0.95rem] text-night-muted">Do externo ao interno. Sem palpite.</p>
+            </div>
+            <span class="status status-warn">2 abertos</span>
+          </div>
+          <div class="mt-5 border border-night-line">
+            {[
+              ["Site fora do ar", "Em atendimento", "danger"],
+              ["E-mail parado", "Na fila", "warn"],
+              ["Acesso novo", "Resolvido", "ok"],
+            ].map(([chamado, estado, tone], index) => (
+              <div class={`flex items-center justify-between gap-3 px-3 py-3 ${index % 2 === 1 ? "bg-night-3/30" : ""}`}>
+                <span class="flex items-center gap-2.5">
+                  <span class="grid size-7 place-items-center bg-night-3 text-night-muted">
+                    {index === 2 ? <Check size={14} /> : <Clock3 size={14} />}
+                  </span>
+                  <span class="text-[0.95rem] font-semibold">{chamado}</span>
+                </span>
+                <span class={`status ${tone === "danger" ? "status-danger" : tone === "warn" ? "status-warn" : "status-ok"}`}>{estado}</span>
+              </div>
+            ))}
+          </div>
+          <div class="mt-5 bg-night-3 p-3">
+            <p class="text-[0.95rem] font-semibold text-night-muted">Ordem de triagem</p>
+            <p class="mt-1 text-[0.95rem] font-semibold">Domínio → DNS → hospedagem → site</p>
+          </div>
+          <div class="mt-auto flex items-center gap-2 bg-night-3/40 px-3 py-2.5 text-[0.95rem] font-medium text-night-muted">
+            <CircleAlert size={14} />
+            Cada passo registrado. Mudança só com responsável avisado.
+          </div>
+        </div>
+      )
+    }
+
+    {
+      service === "infra" && (
+        <div class="flex h-full flex-col">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <p class="font-heading text-[1.35rem] font-semibold leading-none">Base com dono</p>
+              <p class="mt-1.5 text-[0.95rem] text-night-muted">Hospedagem, domínio, e-mail e backup.</p>
+            </div>
+            <span class="status status-ok">No nome da empresa</span>
+          </div>
+          <div class="mt-5 grid gap-2">
+            {[
+              ["Domínio", "Registro e vencimento", "No nome da empresa", "ok"],
+              ["Hospedagem", "Escolha pelo custo de manter", "Documentada", "ok"],
+              ["Backup", "Cópia diária do que importa", "Em dia", "ok"],
+              ["Acessos", "Mapa sem senha no documento", "Registrado", "soft"],
+            ].map(([nome, detalhe, estado, tone]) => (
+              <div class="flex items-center justify-between gap-3 bg-night-3 px-3 py-2.5">
+                <span>
+                  <span class="block text-[0.95rem] font-semibold">{nome}</span>
+                  <span class="block text-[0.95rem] text-night-muted">{detalhe}</span>
+                </span>
+                <span class={`status ${tone === "soft" ? "status-soft" : "status-ok"}`}>{estado}</span>
+              </div>
+            ))}
+          </div>
+          <div class="mt-5 flex items-end gap-2" aria-hidden="true">
+            {[38, 54, 46, 62, 58, 72, 66, 80, 74, 88, 82, 94].map((bar) => (
+              <span class="min-w-0 flex-1 bg-brand/80" style={`height:${bar * 0.55}px`}></span>
+            ))}
+          </div>
+          <div class="mt-auto flex items-center justify-between gap-3 bg-night-3/40 px-3 py-2.5 text-[0.95rem] font-medium text-night-muted">
+            <span>Movimento de 14 dias.</span>
+            <span>Quem responde está definido.</span>
+          </div>
+        </div>
+      )
+    }
+  </div>
+
+  <div class="flex items-center justify-between gap-3 bg-night-3/60 px-4 py-3">
+    <p class="max-w-[32ch] text-[0.95rem] font-medium leading-snug text-night-muted">{message}</p>
+    <a
+      href="#contato"
+      data-service-cta={service}
+      class="inline-flex shrink-0 items-center gap-2 text-[0.95rem] font-bold text-brand transition-colors hover:text-amber"
+    >
+      Conversar
+      <ArrowRight size={16} stroke-width={1.8} />
+    </a>
+  </div>
+</div>

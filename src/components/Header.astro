@@ -1,0 +1,137 @@
+---
+import { Menu, X } from "@lucide/astro";
+import Logo from "./Logo.astro";
+import Button from "./Button.astro";
+
+interface Props {
+  homeAnchors?: boolean;
+}
+
+const { homeAnchors = true } = Astro.props;
+const prefix = homeAnchors ? "" : "/";
+const homeHref = homeAnchors ? "#topo" : "/";
+const contactHref = `${prefix}#contato`;
+const links = [
+  { href: `${prefix}#frentes`, label: "O que fazemos" },
+  { href: `${prefix}#metodo`, label: "Como trabalhamos" },
+  { href: `${prefix}#perguntas`, label: "Perguntas" },
+  { href: `${prefix}#contato`, label: "Contato" },
+];
+---
+
+<header class="absolute inset-x-0 top-0 z-40 text-night-ink">
+  <div class="shell flex h-[5.25rem] items-center justify-between gap-6 lg:h-24" data-header-bar>
+    <a href={homeHref} class="flex items-center" aria-label="Axis Serviços, ir para o início">
+      <Logo class="h-[1.65rem] w-auto lg:h-[1.9rem]" label="" />
+    </a>
+
+    <nav class="hidden items-center gap-7 lg:flex" aria-label="Navegação principal">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          class="text-small font-semibold text-night-muted transition-colors duration-150 hover:text-night-ink"
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="hidden items-center gap-2 lg:flex">
+      <Button href={contactHref} variant="primary" label="Conversar sobre o projeto" />
+    </div>
+
+    <button
+      type="button"
+      popovertarget="menu-mobile"
+      class="flex items-center gap-2 text-small font-semibold lg:hidden"
+      aria-label="Abrir menu"
+      data-menu-trigger
+    >
+      <Menu size={22} stroke-width={1.6} />
+      Menu
+    </button>
+  </div>
+
+  <div
+    id="menu-mobile"
+    popover
+    role="dialog"
+    aria-modal="true"
+    aria-label="Menu"
+    class="menu-popover fixed inset-0 m-0 h-dvh max-h-none w-full max-w-none border-0 bg-night p-0 text-night-ink"
+  >
+    <div class="shell flex h-[5.25rem] items-center justify-between">
+      <Logo class="h-[1.65rem] w-auto" />
+      <button
+        type="button"
+        popovertarget="menu-mobile"
+        popovertargetaction="hide"
+        class="flex items-center gap-2 text-small font-semibold"
+        aria-label="Fechar menu"
+        data-menu-close
+      >
+        Fechar
+        <X size={22} stroke-width={1.6} />
+      </button>
+    </div>
+
+    <div class="shell flex min-h-[calc(100dvh-5.25rem)] flex-col justify-between pb-8">
+      <nav class="flex flex-col gap-1 pt-12" aria-label="Navegação principal no celular">
+        {links.map((link) => (
+          <a
+            href={link.href}
+            data-menu-link
+            class="py-4 text-[clamp(2rem,9vw,3.4rem)] font-semibold leading-none tracking-[-0.03em]"
+          >
+            {link.label}
+          </a>
+        ))}
+      </nav>
+
+      <div class="flex items-center justify-end gap-4 pt-10">
+        <Button href={contactHref} variant="primary" label="Conversar" arrow="up-right" />
+      </div>
+    </div>
+  </div>
+</header>
+
+<script>
+  const menu = document.querySelector<HTMLElement>("#menu-mobile");
+  const trigger = document.querySelector<HTMLButtonElement>("[data-menu-trigger]");
+  const close = document.querySelector<HTMLButtonElement>("[data-menu-close]");
+
+  const headerBar = document.querySelector<HTMLElement>("[data-header-bar]");
+  const main = document.querySelector<HTMLElement>("main");
+  const footer = document.querySelector<HTMLElement>("footer");
+
+  for (const link of menu?.querySelectorAll<HTMLAnchorElement>("a") ?? []) {
+    link.addEventListener("click", () => menu?.hidePopover());
+  }
+
+  menu?.addEventListener("toggle", (event) => {
+    const open = (event as ToggleEvent).newState === "open";
+    document.body.style.overflow = open ? "hidden" : "";
+    if (headerBar) headerBar.inert = open;
+    if (main) main.inert = open;
+    if (footer) footer.inert = open;
+    if (open) close?.focus();
+    else trigger?.focus();
+  });
+
+  menu?.addEventListener("keydown", (event) => {
+    if (event.key !== "Tab") return;
+    const focusable = [
+      ...menu.querySelectorAll<HTMLElement>('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'),
+    ].filter((element) => element.offsetParent !== null);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+</script>

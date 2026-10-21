@@ -1,0 +1,72 @@
+---
+import Logo from "./Logo.astro";
+import Button from "./Button.astro";
+
+interface Props {
+  homeAnchors?: boolean;
+}
+
+const { homeAnchors = true } = Astro.props;
+const prefix = homeAnchors ? "" : "/";
+
+const frentes = [
+  ["Sites e plataformas", "sites"],
+  ["Sistemas sob medida", "sistemas"],
+  ["Integrações e automação", "integracoes"],
+  ["Auditoria e consultoria", "auditoria"],
+  ["Suporte recorrente", "suporte"],
+  ["Infraestrutura e cloud", "infra"],
+];
+---
+
+<footer class="bg-brand text-brand-ink">
+  <div class="shell pt-16 pb-6 sm:pt-20">
+    <div class="grid-page gap-y-10">
+      <div class="col-span-4 md:col-span-3 lg:col-span-6">
+        <p class="max-w-[22ch] font-heading text-lead font-semibold leading-[1.12] tracking-[-0.015em]">
+          A tecnologia que mantém a sua operação girando.
+        </p>
+      </div>
+
+      <div class="col-span-4 md:col-span-3 lg:col-span-5 lg:col-start-8">
+        <p class="max-w-[34ch] text-body leading-snug text-brand-ink/85">
+          A primeira conversa é sem custo e trata da sua operação.
+        </p>
+        <div class="mt-5">
+          <Button href={`${prefix}#contato`} variant="night" label="Conversar sobre o projeto" class="w-full sm:w-auto" />
+        </div>
+
+        <div class="mt-9 grid grid-cols-1 gap-x-8 gap-y-1 sm:grid-cols-2">
+          {frentes.map(([label, id]) => (
+            <a
+              href={`${prefix}#frentes`}
+              data-service-link={id}
+              class="group flex items-center justify-between gap-3 py-2 text-small font-semibold transition-colors hover:text-brand-ink"
+            >
+              {label}
+              <span class="text-small opacity-0 transition-opacity group-hover:opacity-100" aria-hidden="true">↗</span>
+            </a>
+          ))}
+        </div>
+
+        <div class="mt-7 flex flex-wrap gap-x-5 gap-y-2 text-small font-semibold">
+          <a href={`${prefix}#metodo`} class="link-underline">Como trabalhamos</a>
+          <a href={`${prefix}#perguntas`} class="link-underline">Perguntas</a>
+          <a href={`${prefix}#contato`} class="link-underline">Contato</a>
+        </div>
+
+        <p class="mt-6 max-w-[40ch] text-small leading-snug text-brand-ink">
+          Sem e-mail ou telefone publicados. O contato é pelo formulário.
+        </p>
+      </div>
+    </div>
+
+    <div class="mt-14 pt-5">
+      <Logo class="w-full text-brand-ink" label="Axis Serviços" />
+      <div class="mt-4 flex flex-col justify-between gap-2 text-small font-semibold sm:flex-row">
+        <p>© 2026 Axis Serviços</p>
+        <p class="text-brand-ink">Tecnologia explicada. Operação sob controle.</p>
+      </div>
+    </div>
+  </div>
+</footer>

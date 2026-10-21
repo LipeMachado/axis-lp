@@ -1,0 +1,70 @@
+---
+import { ArrowUpRight } from "@lucide/astro";
+
+const perguntas = [
+  {
+    pergunta: "Vou ficar dependente de vocês?",
+    resposta:
+      "Não. A entrega inclui documentação, treinamento e registro de acessos. Você decide quanto opera sozinho.",
+  },
+  {
+    pergunta: "Quanto custa?",
+    resposta:
+      "Depende do que existe e do que precisa mudar. Escopo, faixa e prazo vêm na proposta, depois da conversa.",
+  },
+  {
+    pergunta: "Trocar de fornecedor dá medo.",
+    resposta:
+      "Começamos por um diagnóstico de leitura, sem mexer em nada. A troca é planejada.",
+  },
+  {
+    pergunta: "Vocês fazem marketing?",
+    resposta:
+      "Não. Cuidamos da parte técnica. Se a demanda mistura marketing e tecnologia, atendemos a parte técnica.",
+  },
+];
+---
+
+<section id="perguntas" class="section bg-paper text-ink scroll-mt-nav">
+  <div class="shell">
+    <div class="grid-page gap-y-10">
+      <div class="col-span-4 md:col-span-6 lg:col-span-5"-item>
+        <div>
+        <h2 class="head max-w-[10ch]">Perguntas frequentes</h2>
+        <p class="mt-5 max-w-[30ch] text-lead text-muted">Respostas curtas, sem rodeio.</p>
+        <p class="mt-8 max-w-[36ch] text-body leading-snug text-muted">
+          Se a sua pergunta não estiver aqui, a primeira conversa resolve. Sem custo e sem compromisso.
+        </p>
+        </div>
+        <a href="#contato" class="link-underline mt-8 inline-flex items-center gap-2 text-small font-bold">
+          Conversar sobre o projeto
+          <ArrowUpRight size={17} stroke-width={1.7} />
+        </a>
+      </div>
+
+      <div class="col-span-4 md:col-span-6 lg:col-span-6 lg:col-start-7"-item>
+        <div class="grid gap-2">
+          {perguntas.map((item, index) => (
+            <details
+              class="group bg-surface px-5 py-1 transition-colors duration-200 hover:bg-surface-2 open:bg-surface"
+              name="perguntas-axis"
+              open={index === 0}
+            >
+              <summary class="flex cursor-pointer list-none items-start justify-between gap-6 py-5 [&::-webkit-details-marker]:hidden">
+                <span class="max-w-[34ch] font-heading text-body font-semibold leading-[1.1] tracking-[-0.015em] md:text-lead">
+                  {item.pergunta}
+                </span>
+                <span class="mt-0.5 grid size-7 shrink-0 place-items-center bg-paper font-heading text-lead font-normal leading-none text-ink transition-transform duration-300 group-open:rotate-45" aria-hidden="true">
+                  +
+                </span>
+              </summary>
+              <div class="pb-5 pe-10">
+                <p class="max-w-[52ch] text-body leading-snug text-ink/90">{item.resposta}</p>
+              </div>
+            </details>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
